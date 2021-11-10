@@ -7,6 +7,8 @@
         + If a plane lands, its `isFlying` property is set to false.
 */
 
+const { arrayTypeAnnotation } = require("@babel/types");
+
 // EXAMPLE SOLUTION CODE:
 function Airplane(name) {
   this.name = name;
@@ -39,12 +41,26 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-  
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
 
+Person.prototype.eat = function(edible){
+  if(this.stomach.length < 10){
+    this.stomach.push(edible)
+  };
+}
 
+Person.prototype.poop = function(){
+  return this.stomach = [];
 
+}
+
+Person.prototype.toString = function () {
+  return `${this.name}, ${this.age}`
+}
 
 
 
@@ -63,10 +79,17 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
 }
 
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons;
+  return this.tank;
+}
 
 /*
   TASK 3
@@ -75,18 +98,22 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
- 
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age)
+  this.favoriteToy = favoriteToy;
 }
-
+Baby.prototype = Object.create(Person.prototype)
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`
+}
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. windows binding -> this will return the entire window without any context given to it
+  2. Implicit binding ->  applies to objects with methods. refers to left of the dot
+  3. Explicit binding -> we tell a function what this keyword shoud be using .call, .apply, .bind call will immediatly invoke the function and arguments are passed one by one.
+  4. New binding -> when a function is invoked with a new keyword the this keyword inside that function is bound to the new object  being constructed.
 */
 
 
